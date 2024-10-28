@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import {useState} from "react";
 
 export default function TextForms(props) {
-
+    
   //To Remove Extra Spaces
   const handleExtraSpaces=()=>{
     let newText=text.split(/\s+/) 
@@ -38,6 +38,7 @@ export default function TextForms(props) {
       var text=document.getElementById("myBox");
       text.select(); //selects the text
       text.setSelectionRange(0,text.value.length); //ensure the full selection range
+      // text.getSelection().removeAllChanges; //ensure the full selection range
       navigator.clipboard.writeText(text.value);
       props.showAlert("Copied to clipboard" ,"success");
     }
@@ -81,24 +82,28 @@ export default function TextForms(props) {
   return (
     <>
     <div className="container"  style={{color:props.mode==='dark'?'white':'black'}}>
-      <h1 className="my-3" >{props.heading}</h1>
+      <h1 className="my-5" >{props.heading}</h1>
       <div className="mb-3" >
         <label htmlFor="myBox" className="form-label"></label>
         <textarea className="form-control" onChange={handleOnChange}  style={{backgroundColor: props.mode==='dark'?'black':'white' ,color:props.mode==='dark'?'white':'black'}} value={text} id="myBox" rows="8"></textarea>
       </div>
-      <button className="btn btn-primary mb-3 my-3" onClick={handleLoClick}>Convert to lowercase</button>
-      <button className="btn btn-primary mb-3 my-3 mx-2" onClick={handleUpClick}>Convert to uppercase</button>
-      <button className="btn btn-primary mb-3 my-3 mx-1" onClick={handleClearClick}>Clear Text</button>
-      <button className="btn btn-primary mb-3 my-3 mx-1" onClick={handleOnCopy}>Copy Text</button>
-      <button className="btn btn-primary mb-3 my-3 mx-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+      <button  disabled={text.length===0} className="btn btn-primary mb-3 my-3" onClick={handleLoClick}>Convert to lowercase</button>
+      <button disabled={text.length===0} className="btn btn-primary mb-3 my-3 mx-2" onClick={handleUpClick}>Convert to uppercase</button>
+      <button disabled={text.length===0} className="btn btn-primary mb-3 my-3 mx-1" onClick={handleClearClick}>Clear Text</button>
+      <button disabled={text.length===0} className="btn btn-primary mb-3 my-3 mx-1" onClick={handleOnCopy}>Copy Text</button>
+      <button disabled={text.length===0} className="btn btn-primary mb-3 my-3 mx-1" onClick={handleExtraSpaces}>Remove Extra Spaces</button>
 
     <h3>YOUR TEXT SUMMARY</h3>
     <p> {text.split(".").length} sentences.</p>
     <p > {count} Paragraph.</p>
-    <p> {text.split(" ").length} words and {text.length} characters.</p>
-    <p> {0.008*text.split(" ").length} Minutes read</p>
+    {/* without filter function empty spaces or blank space gets counted in as word to tackle this filter is used */}
+    <p> {text.split(" ").filter((element)=>{
+      return element.length!==0  }).length} words and {text.length} characters.</p>
+    <p> {0.008*text.split(" ").filter((element)=>{
+      return element.length!==0  }).length}
+       Minutes read</p>
     
-    <p><h4>Preview :</h4><br/>{text.length>0?text:"Enter Something to preview "}</p>
+    <p><h4>Preview :</h4><br/>{text.length>0?text:"Nothing to preview "}</p>
 
 </div>
     </>
