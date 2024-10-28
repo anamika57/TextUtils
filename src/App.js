@@ -74,12 +74,7 @@ const removeBodyClasses=()=>{
           <Route exact path="/Home" element={<TextForms heading="Try TextUtils - Word Counter ,Character Counter ,Remove Extra Spaces" showAlert={showAlert} mode={mode} />}/>
           
           <Route exact path="/about" element={<About mode={mode} />} />
-       
-        
-
-        
-           
-           
+     
            </Routes>
       </div>
   </Router>

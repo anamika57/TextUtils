@@ -95,9 +95,8 @@ export default function TextForms(props) {
 
     <h3>YOUR TEXT SUMMARY</h3>
     <p> {text.split(".").length} sentences.</p>
-    <p > {count} Paragraph.</p>
     {/* without filter function empty spaces or blank space gets counted in as word to tackle this filter is used */}
-    <p> {text.split(" ").filter((element)=>{
+    <p> {text.split(/\s+/).filter((element)=>{
       return element.length!==0  }).length} words and {text.length} characters.</p>
     <p> {0.008*text.split(" ").filter((element)=>{
       return element.length!==0  }).length}
